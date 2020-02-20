@@ -36,7 +36,7 @@ app.get("/comics/:id", async (req, res) => {
   const response = await axios.get(
     `http://gateway.marvel.com/v1/public/comics/${req.params.id}?ts=${ts}&apikey=${PublicKey}&hash=${hash}&limit=100&offset=0`
   );
-
+  console.log(req.query.id);
   res.json(response.data);
 });
 
