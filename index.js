@@ -15,46 +15,11 @@ PrivateKey = "c16647d3489b91f2fc7692bebf605dfd7043a325";
 const hash = md5(ts + PrivateKey + PublicKey);
 console.log(hash);
 
-// const sortMysearch = req => {
-//   let result = "";
-//   const alphabetAscending = req.query.sort;
-//   const alphabetDescending = req.query.sort;
-//   if (alphabetAscending) {
-//     result = search.sort({ price: 1 });
-//   } else if (alphabetDescending) {
-//     result = search.sort({ price: -1 });
-//   }
-//   return result;
-// };
-
-// const numberPerPage = (req, search, limitation) => {
-//   const page = req.query.page;
-//   search.limit(limitation);
-//   skip(limitation * page - 1);
-// };
-// const createFilters = req => {
-//   const searchByName = req.query.name;
-//   const filters = {};
-//   if (searchByName) {
-//     filters.name = new RegExp(searchByName, "i");
-//     return filters;
-//   }
-// };
-
 //READ
 app.get("/", async (req, res) => {
   const response = await axios.get(
     `http://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${PublicKey}&hash=${hash}&limit=100&offset=0`
   );
-  // const filters = createFilters(req);
-  // const search = characters.find(filters);
-  // if (sortMysearch(req)) {
-  // }
-  // let limitation = 100;
-  // numberPerPage(req, search, limitation);
-
-  // const isSearch = await search;
-  // await newCharacter.save;
 
   res.json(response.data);
 });
