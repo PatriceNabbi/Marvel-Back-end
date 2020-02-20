@@ -10,15 +10,15 @@ app.use(formidableMiddleware());
 app.use(cors());
 
 ts = Math.floor(Date.now() / 1000);
-PublicKey = "031b52ea3308644001fe99df69e2c703";
-PrivateKey = "c16647d3489b91f2fc7692bebf605dfd7043a325";
-const hash = md5(ts + PrivateKey + PublicKey);
+const publicKey = process.env.PUBLIC_KEY;
+const privateKey = process.env.PRIVATE_KEY;
+const hash = md5(ts + privateKey + publicKey);
 console.log(hash);
 
 //READ
 app.get("/", async (req, res) => {
   const response = await axios.get(
-    `http://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${PublicKey}&hash=${hash}&limit=100&offset=0`
+    `http://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=100&offset=0`
   );
 
   res.json(response.data);
@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
 
 app.get("/characters/:id", async (req, res) => {
   const response = await axios.get(
-    `http://gateway.marvel.com/v1/public/characters/${req.params.id}/comics?ts=${ts}&apikey=${PublicKey}&hash=${hash}&limit=100&offset=0`
+    `http://gateway.marvel.com/v1/public/characters/${req.params.id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=100&offset=0`
   );
   console.log(req.query.id);
   res.json(response.data);
@@ -34,7 +34,7 @@ app.get("/characters/:id", async (req, res) => {
 
 app.get("/comics/:id", async (req, res) => {
   const response = await axios.get(
-    `http://gateway.marvel.com/v1/public/comics/${req.params.id}?ts=${ts}&apikey=${PublicKey}&hash=${hash}&limit=100&offset=0`
+    `http://gateway.marvel.com/v1/public/comics/${req.params.id}?ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=100&offset=0`
   );
   console.log(req.query.id);
   res.json(response.data);
@@ -42,7 +42,7 @@ app.get("/comics/:id", async (req, res) => {
 
 app.get("/comics/", async (req, res) => {
   const response = await axios.get(
-    `http://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${PublicKey}&hash=${hash}&limit=100&offset=0`
+    `http://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=100&offset=0`
   );
 
   res.json(response.data);
